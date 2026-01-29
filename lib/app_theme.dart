@@ -56,6 +56,12 @@ class AppTheme {
       ),
     ),
 
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: darkBlack,
+        selectedItemColor: darkPrimary,
+        unselectedItemColor: gray,
+      )
+
 
   );
 
@@ -102,6 +108,14 @@ class AppTheme {
         ),
       ),
     ),
+
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: white,
+        selectedItemColor: primary,
+      unselectedItemColor: gray,
+
+
+    )
 
 
 
