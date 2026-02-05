@@ -7,16 +7,20 @@ class AppTheme {
   static const black = Color(0xFF1C1C1C);
   static const darkBlack =Color(0xFF000F30);
   static const offwhite = Color(0xFFF4F7FF);
+  static const darkblue = Color(0xFF001440);
   static const white = Color(0xFFFFFFFF);
   static const lightoffwhite = Color(0xFFD6D6D6);
   static const gray = Color(0xFF686868);
   static const lightgrey = Color(0xFFF0F0F0);
 
 
+
   static ThemeData darkTheme = ThemeData(
+    splashFactory: NoSplash.splashFactory,
     primaryColor: darkPrimary,
     scaffoldBackgroundColor: darkBlack,
     brightness: Brightness.dark,
+
     textTheme: TextTheme(
       headlineSmall: TextStyle(
           fontWeight: .w500,
@@ -40,7 +44,7 @@ class AppTheme {
       ),
     ),
 
-    elevatedButtonTheme: ElevatedButtonThemeData(
+      elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: darkPrimary,
         foregroundColor: white,
@@ -60,12 +64,22 @@ class AppTheme {
         backgroundColor: darkBlack,
         selectedItemColor: darkPrimary,
         unselectedItemColor: gray,
+        unselectedIconTheme: IconThemeData(color: gray),
+      ),
+
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: darkPrimary,
+        foregroundColor: white,
+        shape: CircleBorder(),
       )
+
+
 
 
   );
 
   static ThemeData lightTheme = ThemeData(
+      splashFactory: NoSplash.splashFactory,
       primaryColor: primary,
       scaffoldBackgroundColor: offwhite,
     brightness: Brightness.light,
@@ -115,7 +129,12 @@ class AppTheme {
       unselectedItemColor: gray,
 
 
-    )
+    ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: primary,
+        foregroundColor: white,
+        shape: CircleBorder(),
+  )
 
 
 
