@@ -12,6 +12,7 @@ class AppTheme {
   static const lightoffwhite = Color(0xFFD6D6D6);
   static const gray = Color(0xFF686868);
   static const lightgrey = Color(0xFFF0F0F0);
+  static const lightblue = Color(0xFF002D8F);
 
 
 
@@ -21,7 +22,7 @@ class AppTheme {
     scaffoldBackgroundColor: darkBlack,
     brightness: Brightness.dark,
 
-    textTheme: TextTheme(
+      textTheme: TextTheme(
       headlineSmall: TextStyle(
           fontWeight: .w500,
           fontSize: 18,
@@ -71,8 +72,23 @@ class AppTheme {
         backgroundColor: darkPrimary,
         foregroundColor: white,
         shape: CircleBorder(),
-      )
+      ),
 
+     inputDecorationTheme: InputDecorationThemeData(
+       filled: true,
+       fillColor: darkblue,
+       hintStyle: TextStyle(
+         fontWeight: .w400,
+         fontSize: 14,
+         color: lightoffwhite
+       ),
+       enabledBorder: OutlineInputBorder(
+         borderRadius: .circular(16),
+         borderSide: BorderSide(color: lightblue ),),
+       focusedBorder: OutlineInputBorder(
+         borderRadius: .circular(16),
+         borderSide: BorderSide(color: lightblue ),),
+       ),
 
 
 
@@ -134,7 +150,24 @@ class AppTheme {
       backgroundColor: primary,
         foregroundColor: white,
         shape: CircleBorder(),
-  )
+  ),
+
+    inputDecorationTheme: InputDecorationThemeData(
+      filled: true,
+      fillColor: white,
+      hintStyle: TextStyle(
+          fontWeight: .w400,
+          fontSize: 14,
+          color: gray
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: lightgrey ),),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: lightgrey ),),
+    ),
+
 
 
 
