@@ -13,6 +13,7 @@ class AppTheme {
   static const gray = Color(0xFF686868);
   static const lightgrey = Color(0xFFF0F0F0);
   static const lightblue = Color(0xFF002D8F);
+  static const brightgrey = Color(0xFFE9EAEB);
 
 
 
@@ -90,6 +91,19 @@ class AppTheme {
          borderSide: BorderSide(color: lightblue ),),
        ),
 
+    listTileTheme: ListTileThemeData(
+        tileColor: darkblue,
+        minTileHeight: 0,
+      contentPadding: EdgeInsets.symmetric(horizontal:16 ,vertical:14 ),
+      shape: RoundedRectangleBorder(borderRadius: .circular(16),
+      ),
+      titleTextStyle: TextStyle(
+        fontWeight: .w500,
+        fontSize: 16,
+        color: white,
+      ),
+    ),
+
 
 
   );
@@ -166,6 +180,20 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: .circular(16),
         borderSide: BorderSide(color: lightgrey ),),
+    ),
+
+    listTileTheme: ListTileThemeData(
+      tileColor: white,
+      minTileHeight: 0,
+      contentPadding: EdgeInsets.symmetric(horizontal:16 ,vertical:14 ),
+      shape: RoundedRectangleBorder(borderRadius: .circular(16),
+
+      ),
+      titleTextStyle: TextStyle(
+        fontWeight: .w500,
+        fontSize: 16,
+        color: black,
+      ),
     ),
 
 

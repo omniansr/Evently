@@ -25,7 +25,7 @@ class evently extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       routes: {HomeScreen.routename: (_) => HomeScreen(),
         OnboardingScreen.routename:(_) => OnboardingScreen(),
         StartScreen.routename:(_) => StartScreen()},
