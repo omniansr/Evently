@@ -1,0 +1,90 @@
+import 'package:evently/app_theme.dart';
+import 'package:evently/models/language_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+class ProfileTab extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    TextTheme textTheme = Theme.of(context).textTheme;
+    Color primaryColor = Theme.of(context).primaryColor;
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          SizedBox(height: 32,),
+          CircleAvatar(
+            backgroundImage: AssetImage('assets/images/route_logo.png'),
+            radius: 58,
+          ),
+          SizedBox(height: 16,),
+          Text('data' , style: textTheme.titleLarge!.copyWith(color: isDark? AppTheme.white:
+          AppTheme.black,),),
+          SizedBox(height: 4,),
+          Text('data@gmail.com',style: textTheme.titleSmall!.copyWith(fontWeight: .w400,
+              color: AppTheme.gray ),),
+          SizedBox(height: 32,),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: .circular(16),
+                border: BoxBorder.all(
+                    color: isDark? AppTheme.lightblue : AppTheme.lightgrey
+                )
+            ),
+            child: SwitchListTile(
+                value: true, onChanged: (value){},
+                title: Text('Dark Mode'),
+              activeTrackColor: primaryColor,
+              inactiveTrackColor: AppTheme.brightgrey,
+              thumbColor: WidgetStatePropertyAll(AppTheme.white),
+              trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
+              contentPadding: EdgeInsets.symmetric(vertical: 14,horizontal: 16),
+            ),
+          ),
+          SizedBox(height: 16,),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: .circular(16),
+                border: BoxBorder.all(
+                    color: isDark? AppTheme.lightblue : AppTheme.lightgrey
+                )
+            ),
+            child: ListTile(
+              title: Text('Language'),
+              trailing: DropdownButton(
+                value: 'en',
+                items: LanguageModel.languages
+                      .map((language) => DropdownMenuItem(
+                    value: language.code,
+                    child: Text(language.name)
+                )
+                ).toList(),
+              onChanged: (value){},
+              dropdownColor: isDark? AppTheme.darkblue : AppTheme.white, 
+                underline: SizedBox(),
+                borderRadius: .circular(16),
+              ),
+            ),
+          ),
+          SizedBox(height: 16,),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: .circular(16),
+              border: BoxBorder.all(
+                color: isDark? AppTheme.lightblue : AppTheme.lightgrey
+              )
+            ),
+            child: ListTile(
+              title: Text('Logout'),
+              trailing: SvgPicture.asset('assets/icons/logout.svg'),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+}
