@@ -107,6 +107,12 @@ class AppTheme {
        focusedBorder: OutlineInputBorder(
          borderRadius: .circular(16),
          borderSide: BorderSide(color: lightblue ),),
+         errorBorder:  OutlineInputBorder(
+           borderRadius: .circular(16),
+           borderSide: BorderSide(color: Colors.red  ),),
+         focusedErrorBorder:  OutlineInputBorder(
+         borderRadius: .circular(16),
+    borderSide: BorderSide(color: Colors.red ),),
        ),
 
       listTileTheme: ListTileThemeData(
@@ -214,6 +220,12 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: .circular(16),
         borderSide: BorderSide(color: lightgrey ),),
+      errorBorder:  OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: Colors.red  ),),
+      focusedErrorBorder:  OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: Colors.red ),),
     ),
 
     listTileTheme: ListTileThemeData(
