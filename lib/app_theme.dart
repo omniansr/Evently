@@ -14,6 +14,7 @@ class AppTheme {
   static const lightgrey = Color(0xFFF0F0F0);
   static const lightblue = Color(0xFF002D8F);
   static const brightgrey = Color(0xFFE9EAEB);
+  static const greyIcon = Color(0xFFB9B9B9);
 
 
 
@@ -24,6 +25,11 @@ class AppTheme {
     brightness: Brightness.dark,
 
       textTheme: TextTheme(
+        headlineMedium: TextStyle(
+            fontWeight: .w600,
+            fontSize: 24,
+            color: white
+        ),
       headlineSmall: TextStyle(
           fontWeight: .w500,
           fontSize: 18,
@@ -45,6 +51,18 @@ class AppTheme {
           color: darkPrimary
       ),
     ),
+
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: darkPrimary,
+          textStyle: TextStyle(fontSize: 14,
+              fontWeight: FontWeight.w600,
+            decoration: .underline
+              )
+        ),
+
+
+      ),
 
       elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -75,7 +93,7 @@ class AppTheme {
         shape: CircleBorder(),
       ),
 
-     inputDecorationTheme: InputDecorationThemeData(
+      inputDecorationTheme: InputDecorationThemeData(
        filled: true,
        fillColor: darkblue,
        hintStyle: TextStyle(
@@ -89,9 +107,15 @@ class AppTheme {
        focusedBorder: OutlineInputBorder(
          borderRadius: .circular(16),
          borderSide: BorderSide(color: lightblue ),),
+         errorBorder:  OutlineInputBorder(
+           borderRadius: .circular(16),
+           borderSide: BorderSide(color: Colors.red  ),),
+         focusedErrorBorder:  OutlineInputBorder(
+         borderRadius: .circular(16),
+    borderSide: BorderSide(color: Colors.red ),),
        ),
 
-    listTileTheme: ListTileThemeData(
+      listTileTheme: ListTileThemeData(
         tileColor: darkblue,
         minTileHeight: 0,
       contentPadding: EdgeInsets.symmetric(horizontal:16 ,vertical:14 ),
@@ -115,6 +139,11 @@ class AppTheme {
     brightness: Brightness.light,
 
     textTheme: TextTheme(
+      headlineMedium: TextStyle(
+          fontWeight: .w600,
+          fontSize: 24,
+          color: primary
+      ),
         headlineSmall: TextStyle(
           fontWeight: .w500,
               fontSize: 18,
@@ -136,6 +165,17 @@ class AppTheme {
             color: primary
         ),
       ),
+
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+          foregroundColor: primary,
+          textStyle: TextStyle(fontSize: 14,
+            fontWeight: FontWeight.w600,
+            decoration: .underline
+          )
+
+      ),
+    ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -180,6 +220,12 @@ class AppTheme {
       focusedBorder: OutlineInputBorder(
         borderRadius: .circular(16),
         borderSide: BorderSide(color: lightgrey ),),
+      errorBorder:  OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: Colors.red  ),),
+      focusedErrorBorder:  OutlineInputBorder(
+        borderRadius: .circular(16),
+        borderSide: BorderSide(color: Colors.red ),),
     ),
 
     listTileTheme: ListTileThemeData(
@@ -195,6 +241,8 @@ class AppTheme {
         color: black,
       ),
     ),
+
+
 
 
 
