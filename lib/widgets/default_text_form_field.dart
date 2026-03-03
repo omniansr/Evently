@@ -2,7 +2,7 @@ import 'package:evently/app_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-enum DefaultTextFormFieldType {auth, search}
+enum DefaultTextFormFieldType {auth, search , add}
 class DefaultTextFormField extends StatefulWidget{
   DefaultTextFormFieldType type;
   String hintText;
@@ -12,6 +12,7 @@ class DefaultTextFormField extends StatefulWidget{
   String? prifixIconImageName;
   String? suffixIconImageName;
   bool isPassword ;
+  int maxLine ;
 
 
   DefaultTextFormField({
@@ -23,6 +24,7 @@ class DefaultTextFormField extends StatefulWidget{
   this.prifixIconImageName,
   this.suffixIconImageName,
     this.isPassword = false,
+    this.maxLine = 1,
   });
 
   @override
@@ -66,6 +68,7 @@ class _DefaultTextFormFieldState extends State<DefaultTextFormField> {
       obscureText: isObscure,
       autovalidateMode: .onUserInteraction,
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      maxLines: widget.maxLine,
 
     );
   }

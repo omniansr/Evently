@@ -4,7 +4,14 @@ import 'package:evently/tabs/home/tab_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class HomeHeader  extends StatelessWidget{
+class HomeHeader  extends StatefulWidget{
+  @override
+  State<HomeHeader> createState() => _HomeHeaderState();
+}
+
+class _HomeHeaderState extends State<HomeHeader> {
+
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme = Theme.of(context).textTheme;
@@ -31,11 +38,22 @@ class HomeHeader  extends StatelessWidget{
                 dividerColor: Colors.transparent,
                 labelPadding: EdgeInsets.only(right: 8),
                 tabs: [
-                  TabItem(name: 'All', isSelected: true , icon: Icons.category_outlined ),
+                  TabItem(name: 'All',
+                      isSelected: currentIndex == 0 ,
+                      icon: Icons.category_outlined ),
                   ...CategoryModel.categories.map((category) =>
-                      TabItem(name: category.name, isSelected: false,icon: category.icon,iconPath: category.iconPath,)
+                      TabItem(name: category.name,
+                        isSelected: currentIndex == CategoryModel.categories.indexOf(category) +1,
+                        icon: category.icon,
+                        iconPath: category.iconPath,)
                   ).toList(),
-                ]
+                ],
+                onTap: (index){
+                  if(currentIndex == index) return;
+                  currentIndex = index;
+                  setState(() {});
+
+                },
                     ),
             ),
           ),

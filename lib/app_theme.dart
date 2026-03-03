@@ -24,6 +24,16 @@ class AppTheme {
     scaffoldBackgroundColor: darkBlack,
     brightness: Brightness.dark,
 
+    appBarTheme: AppBarThemeData(
+      backgroundColor: darkBlack,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+          fontWeight: .w500,
+          fontSize: 18,
+          color: white,
+      ),
+    ),
+
       textTheme: TextTheme(
         headlineMedium: TextStyle(
             fontWeight: .w600,
@@ -137,6 +147,16 @@ class AppTheme {
       primaryColor: primary,
       scaffoldBackgroundColor: offwhite,
     brightness: Brightness.light,
+
+    appBarTheme: AppBarThemeData(
+      backgroundColor: offwhite,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        fontWeight: .w500,
+        fontSize: 18,
+        color: black
+      ),
+    ),
 
     textTheme: TextTheme(
       headlineMedium: TextStyle(
