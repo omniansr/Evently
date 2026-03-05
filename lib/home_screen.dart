@@ -1,3 +1,4 @@
+import 'package:evently/create_event_screen.dart';
 import 'package:evently/nav_bar_icon.dart';
 import 'package:evently/tabs/favorite/favorite_tab.dart';
 import 'package:evently/tabs/home/Home_tab.dart';
@@ -26,7 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
           onTap: (index){
-          currentIndex = index;
+            if (currentIndex == index) return;
+            currentIndex = index;
           setState(() {});
           },
           items: [
@@ -38,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 activeIcon: NavBarIcon(imageName: 'selecteduser')),
           ]
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){},
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.of(context).pushNamed(CreateEventScreen.routename);
+      },
       child: Icon(Icons.add,size: 28,),),
     );
   }
