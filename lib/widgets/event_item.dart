@@ -21,9 +21,10 @@ class EventItem  extends StatelessWidget{
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     Size screenSize = MediaQuery.sizeOf(context);
 
+
     return InkWell(
       onTap: (){
-        Navigator.of(context).pushNamed(DetailsScreen.routename);
+        Navigator.of(context).pushNamed(DetailsScreen.routename,arguments: event);
       },
       child: Stack(
        children: [
