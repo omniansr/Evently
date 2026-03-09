@@ -1,4 +1,6 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/create_event_screen.dart';
+import 'package:evently/firebase_service.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/tabs/home/tab_item.dart';
@@ -41,10 +43,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(leading: ArrowBack() , title: Text('Event details'),
         actions: [
-        InkWell(child: AppBarActions(svgName: 'edit', isEdit: true),onTap: (){},),
+        InkWell(child: AppBarActions(svgName: 'edit', isEdit: true),onTap: (){
+          Navigator.of(context).pushReplacementNamed(CreateEventScreen.routename,arguments: event);
+        },),
         Padding(
           padding: const EdgeInsets.only(right: 16.0,left: 8),
-          child: InkWell(child: AppBarActions(svgName: 'delete', isEdit: false),onTap: (){},),
+          child: InkWell(child: AppBarActions(svgName: 'delete', isEdit: false),
+            onTap: (){
+            FirebaseService.deleteEvent(event).then((_) {
+              Navigator.of(context).pop();
+            });
+                },),
         )],),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -108,6 +117,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 border: .all(color: isDark ? AppTheme.lightblue : AppTheme.lightgrey),
                 borderRadius: .circular(16),
               ),
+              width: double.infinity,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(event.description,style: textTheme.titleSmall!

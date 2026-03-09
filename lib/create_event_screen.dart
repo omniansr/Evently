@@ -1,5 +1,6 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/firebase_service.dart';
+import 'package:evently/home_screen.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/tabs/home/tab_item.dart';
@@ -15,6 +16,7 @@ import 'package:intl/intl.dart';
 class CreateEventScreen extends StatefulWidget{
   static const String routename = 'createEvent';
 
+
   @override
   State<CreateEventScreen> createState() => _CreateEventScreenState();
 }
@@ -28,18 +30,39 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   DateTime? selectedDate;
   TimeOfDay? selectedTime;
   DateFormat dateFormat = DateFormat('d/M/yyyy');
+  EventModel? event;
 
+  void initState(){
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      event = ModalRoute
+          .of(context)!
+          .settings
+          .arguments as EventModel?;
+      if (event != null) {
+        title.text = event!.title;
+        description.text = event!.description;
+        selectedDate = event!.dateTime;
+        selectedTime = TimeOfDay.fromDateTime(event!.dateTime);
+        selectedCategory = event!.category;
+        currentIndex = CategoryModel.categories.indexOf(selectedCategory);
+        setState(() {});
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+
     Color primaryColor = Theme.of(context).primaryColor;
     TextTheme textTheme = Theme.of(context).textTheme;
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     Size screenSize = MediaQuery.sizeOf(context);
+    bool isEdit = event != null;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(leading: ArrowBack() , title: Text('Add Event'),),
+      appBar: AppBar(leading: ArrowBack() , title: Text(isEdit? 'Edit event':' Add Event')
+      ),
       body: Column(
         crossAxisAlignment: .start,
         children: [
@@ -52,7 +75,9 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               ),
               child: ClipRRect(borderRadius: .circular(16),
 
-                  child: Image.asset(isDark ? selectedCategory.darkImage : selectedCategory.lightImage,
+                  child: Image.asset(
+                      isDark?  selectedCategory.darkImage
+                          :  selectedCategory.lightImage,
                   height: screenSize.height * 0.21,
                   width:  double.infinity,
                   fit: .fill,),
@@ -144,7 +169,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       ],
                     ),
                     SizedBox(height: 8,),
-                    DefaultElevatedButton(label: 'Add Event', onPressed: CreateEvent)
+                    DefaultElevatedButton(label: isEdit? 'Update event':'Add Event', onPressed: isEdit ?
+                    EditEvent : CreateEvent)
                   ],
                 ),
               ),
@@ -166,13 +192,36 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
         selectedTime!.hour,
         selectedTime!.minute
       );
-      EventModel event = EventModel(
+      EventModel createEvent = EventModel(
           category: selectedCategory,
           title: title.text,
           description: description.text,
           dateTime: dateTime );
-      FirebaseService.createEvent(event).then((_) {
+      FirebaseService.createEvent(createEvent).then((_) {
         Navigator.of(context).pop();
+      } );
+
+    }
+  }
+
+  void EditEvent()
+  {
+    if(formKey.currentState!.validate() && selectedDate != null && selectedTime != null) {
+      DateTime dateTime = DateTime(
+          selectedDate!.year,
+          selectedDate!.month,
+          selectedDate!.day,
+          selectedTime!.hour,
+          selectedTime!.minute
+      );
+      EventModel updateEvent = EventModel(
+          id: event!.id,
+          category: selectedCategory,
+          title: title.text,
+          description: description.text,
+          dateTime: dateTime );
+      FirebaseService.updateEvent(updateEvent).then((_) {
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
       } );
 
     }
