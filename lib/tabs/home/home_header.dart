@@ -1,6 +1,7 @@
 import 'package:evently/app_theme.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/user_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/home/tab_item.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +56,9 @@ class _HomeHeaderState extends State<HomeHeader> {
                 onTap: (index){
                   if(currentIndex == index) return;
                   currentIndex = index;
-                  CategoryModel selectedCategory = CategoryModel.categories[index - 1];
+                  CategoryModel? selectedCategory = index == 0 ? null
+                  :CategoryModel.categories[index - 1];
+                  Provider.of<EventProvider>(context,listen: false).filterEvents(selectedCategory);
                   setState(() {});
 
                 },
