@@ -2,26 +2,20 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/tabs/home/home_header.dart';
 import 'package:evently/widgets/event_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class HomeTab extends StatefulWidget{
 
-  @override
-  State<HomeTab> createState() => _HomeTabState();
-}
 
-class _HomeTabState extends State<HomeTab> {
-  List<EventModel> events = [];
+class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if(events.isEmpty)
-      {
-        getEvents();
-      }
+    EventProvider eventProvider = Provider.of<EventProvider>(context);
 
     return Column(
         children: [
@@ -29,17 +23,13 @@ class _HomeTabState extends State<HomeTab> {
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16),
-                itemBuilder: (_,index) => EventItem(events[index]),
+                itemBuilder: (_,index) => EventItem(eventProvider.displayedEvents[index]),
                 separatorBuilder:(_,_) => SizedBox(height: 16,),
-                itemCount: events.length),
+                itemCount: eventProvider.displayedEvents.length),
           )
         ],
 
     );
   }
 
-  Future<void> getEvents() async{
-     events = await FirebaseService.getEvents();
-     setState(() {});
-  }
 }

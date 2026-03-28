@@ -5,6 +5,7 @@ import 'package:evently/create_event_screen.dart';
 import 'package:evently/details_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/onboarding_screen.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/start_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +18,11 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   bool onBoarding = prefs.getBool('onBoarding') ?? false;
   await Firebase.initializeApp();
-  runApp(ChangeNotifierProvider(create: (_) => UserProvider(),child: evently(onBoarding: onBoarding)));
+  runApp(MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => UserProvider()),
+      ChangeNotifierProvider(create: (_) => EventProvider()..getEvents()),
+  ]
+      ,child: evently(onBoarding: onBoarding)));
 }
 
 class evently extends StatelessWidget {
@@ -44,7 +49,7 @@ class evently extends StatelessWidget {
         CreateEventScreen.routename:(_) => CreateEventScreen(),
         DetailsScreen.routename:(_) => DetailsScreen(),
       },
-      initialRoute: onBoarding ? HomeScreen.routename : StartScreen.routename,
+      initialRoute: onBoarding ? RegisterScreen.routename : StartScreen.routename,
     );
   }
 }
