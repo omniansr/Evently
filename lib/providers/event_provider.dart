@@ -45,13 +45,9 @@ class EventProvider with ChangeNotifier {
 
 
   Future<void> getEvents() async {
-    print("🟡 EventProvider.getEvents() called");
 
     allEvents = await FirebaseService.getEvents();
     displayedEvents = allEvents;
-
-    print("🟡 allEvents count: ${allEvents.length}");
-    print("🟡 displayedEvents count: ${displayedEvents.length}");
 
     notifyListeners();
   }
