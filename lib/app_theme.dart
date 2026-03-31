@@ -15,6 +15,8 @@ class AppTheme {
   static const lightblue = Color(0xFF002D8F);
   static const brightgrey = Color(0xFFE9EAEB);
   static const greyIcon = Color(0xFFB9B9B9);
+  static const red = Colors.red;
+  static const green = Colors.green;
 
 
 

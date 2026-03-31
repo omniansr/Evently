@@ -3,6 +3,7 @@ import 'package:evently/auth/login_screen.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/language_model.dart';
 import 'package:evently/models/user_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,6 +89,7 @@ class ProfileTab extends StatelessWidget{
               trailing: SvgPicture.asset('assets/icons/logout.svg',height: 24,
               width: 24,fit: .fill,),
               onTap: () => FirebaseService.logout().then((_){
+                Provider.of<EventProvider>(context, listen: false).clearEvents();
                 Navigator.of(context).pushReplacementNamed(LoginScreen.routename).
                     then((_){
                       Provider.of<UserProvider>(context).updateCurrentUser(null);

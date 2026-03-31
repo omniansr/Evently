@@ -2,9 +2,13 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/auth/register_screen.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/home_screen.dart';
+import 'package:evently/models/user_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
+import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:evently/widgets/default_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -118,12 +122,24 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login(){
+  Future<void> login() async {
     if(formKey.currentState!.validate()) {
-      FirebaseService.login(email: email.text, password: password.text).then((user) {
-        Provider.of<UserProvider>(context,listen: false).updateCurrentUser(user);
+      try {
+        UserModel user = await FirebaseService.login(
+            email: email.text, password: password.text);
+        Provider.of<UserProvider>(context, listen: false).updateCurrentUser(
+            user);
+        Provider.of<EventProvider>(context, listen: false).clearEvents();
+        await Provider.of<EventProvider>(context, listen: false).getEvents();
         Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
-      });
+      }catch (error){
+        String? errorMessage;
+        if(error is FirebaseAuthException)
+        {
+          errorMessage = error.message;
+        }
+        UiUtils.showErrorMessage(errorMessage);
+      }
     }
   }
 }

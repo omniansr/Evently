@@ -41,7 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ]
       ),
       floatingActionButton: FloatingActionButton(onPressed: (){
-        Navigator.of(context).pushNamed(CreateEventScreen.routename);
+        Navigator.of(context).pushNamed(CreateEventScreen.routename).then((_){
+        });
       },
       child: Icon(Icons.add,size: 28,),),
     );

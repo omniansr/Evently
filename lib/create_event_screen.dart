@@ -3,7 +3,9 @@ import 'package:evently/firebase_service.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/tabs/home/tab_item.dart';
+import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/arrow_back.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:evently/widgets/default_text_form_field.dart';
@@ -11,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 
 class CreateEventScreen extends StatefulWidget{
@@ -197,9 +200,13 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           title: title.text,
           description: description.text,
           dateTime: dateTime );
-      FirebaseService.createEvent(createEvent).then((_) {
+      FirebaseService.createEvent(createEvent).then((_) async{
+        await Provider.of<EventProvider>(context,listen: false).getEvents();
         Navigator.of(context).pop();
-      } );
+        UiUtils.showSuccessMessage('Event created successfully');
+      } ).catchError((_) {
+        UiUtils.showErrorMessage('Failed to create event');
+      });
 
     }
   }
@@ -221,6 +228,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           description: description.text,
           dateTime: dateTime );
       FirebaseService.updateEvent(updateEvent).then((_) {
+        Provider.of<EventProvider>(context, listen: false)
+            .updateEventInProvider(updateEvent);
         Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
       } );
 

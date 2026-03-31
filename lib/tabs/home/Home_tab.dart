@@ -18,8 +18,12 @@ class HomeTab extends StatelessWidget {
     EventProvider eventProvider = Provider.of<EventProvider>(context);
 
     return Column(
+
         children: [
           HomeHeader(),
+          eventProvider.displayedEvents.isEmpty
+              ? Center(child: Text("No Events Found"))
+              :
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 16),
