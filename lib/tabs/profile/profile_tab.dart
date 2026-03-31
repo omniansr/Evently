@@ -4,6 +4,7 @@ import 'package:evently/firebase_service.dart';
 import 'package:evently/models/language_model.dart';
 import 'package:evently/models/user_model.dart';
 import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/setting_Provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class ProfileTab extends StatelessWidget{
     TextTheme textTheme = Theme.of(context).textTheme;
     Color primaryColor = Theme.of(context).primaryColor;
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+    SettingProvider settingProvider = Provider.of<SettingProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -42,7 +44,10 @@ class ProfileTab extends StatelessWidget{
                 )
             ),
             child: SwitchListTile(
-                value: true, onChanged: (value){},
+                value: settingProvider.isDark,
+              onChanged: (isDark){
+                  settingProvider.changeTheme(isDark ? .dark : .light);
+              },
                 title: Text('Dark Mode'),
               activeTrackColor: primaryColor,
               inactiveTrackColor: AppTheme.brightgrey,

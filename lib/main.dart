@@ -6,6 +6,7 @@ import 'package:evently/details_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/onboarding_screen.dart';
 import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/setting_Provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/start_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -21,7 +22,9 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => EventProvider()),
+     ChangeNotifierProvider(create: (_) => SettingProvider())
   ]
+
       ,child: evently(onBoarding: onBoarding)));
 }
 
@@ -34,12 +37,13 @@ class evently extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    SettingProvider settingProvider = Provider.of<SettingProvider>(context);
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: settingProvider.themeMode,
       routes: {
         HomeScreen.routename: (_) => HomeScreen(),
         OnboardingScreen.routename:(_) => OnboardingScreen(),

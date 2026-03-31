@@ -84,8 +84,8 @@ import 'package:shared_preferences/shared_preferences.dart';
                   height: 30,
                   width: 30,
                   decoration:BoxDecoration(
-                    color: isDark? AppTheme.darkBlack : AppTheme.white,
-                    border: Border.all(color: isDark? AppTheme.darkPrimary : AppTheme.lightgrey),
+                    color: isDark? AppTheme.darkblue : AppTheme.white,
+                    border: Border.all(color: isDark? AppTheme.lightblue : AppTheme.lightgrey),
                     borderRadius: BorderRadius.circular(8),
                   ),
                     child: SvgPicture.asset('assets/icons/arrow-left.svg',height: 24,width: 24,
@@ -106,8 +106,8 @@ import 'package:shared_preferences/shared_preferences.dart';
                           height: 30,
                           width: 60,
                           decoration:BoxDecoration(
-                              color: isDark?AppTheme.darkBlack:AppTheme.white,
-                              border: BoxBorder.all(color: isDark? AppTheme.darkPrimary: AppTheme.lightgrey),
+                              color: isDark?AppTheme.darkblue:AppTheme.white,
+                              border: BoxBorder.all(color: isDark? AppTheme.lightblue: AppTheme.lightgrey),
                               borderRadius: BorderRadius.circular(8),
                               ),
                           child: Text('Skip',textAlign: .center,
@@ -150,7 +150,7 @@ import 'package:shared_preferences/shared_preferences.dart';
                     height: 8,
                     decoration: BoxDecoration(
                       color: currentIndex == index
-                          ?  AppTheme.primary
+                          ?  isDark ? AppTheme.darkPrimary:AppTheme.primary
                           : AppTheme.gray,
                       borderRadius: BorderRadius.circular(10),
                     ),
