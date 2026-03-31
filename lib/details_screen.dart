@@ -3,6 +3,7 @@ import 'package:evently/create_event_screen.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/tabs/home/tab_item.dart';
 import 'package:evently/widgets/app_bar_actions.dart';
 import 'package:evently/widgets/arrow_back.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DetailsScreen extends StatefulWidget{
   static const String routename = 'details';
@@ -51,6 +53,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
           child: InkWell(child: AppBarActions(svgName: 'delete', isEdit: false),
             onTap: (){
             FirebaseService.deleteEvent(event).then((_) {
+              Provider.of<EventProvider>(context, listen: false)
+                  .deleteEventInProvider(event.id);
               Navigator.of(context).pop();
             });
                 },),

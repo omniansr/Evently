@@ -6,44 +6,49 @@ import 'package:firebase_core/firebase_core.dart';
 
 class FirebaseService {
   static CollectionReference<EventModel> getEventCollection() =>
-   FirebaseFirestore.instance.collection('events')
-      .withConverter<EventModel>(
-  fromFirestore: (snapshot,_) { EventModel event =  EventModel.fromJson(snapshot.data()!);
-    event.id = snapshot.id;
-    return event;
-    },
-  toFirestore: (event,_) => event.toJson(),
-  );
+      FirebaseFirestore.instance.collection('events')
+          .withConverter<EventModel>(
+        fromFirestore: (snapshot, _) {
+          EventModel event = EventModel.fromJson(snapshot.data()!);
+          event.id = snapshot.id;
+          return event;
+        },
+        toFirestore: (event, _) => event.toJson(),
+      );
 
   static CollectionReference<UserModel> getUsersCollection() =>
       FirebaseFirestore.instance.collection('users')
           .withConverter<UserModel>(
-        fromFirestore: (snapshot,_) { UserModel event =  UserModel.fromJson(snapshot.data()!);
-        event.id = snapshot.id;
-        return event;
+        fromFirestore: (snapshot, _) {
+          UserModel event = UserModel.fromJson(snapshot.data()!);
+          event.id = snapshot.id;
+          return event;
         },
-        toFirestore: (event,_) => event.toJson(),
+        toFirestore: (event, _) => event.toJson(),
       );
 
-  static Future<void> createEvent (EventModel event){
+  static Future<void> createEvent(EventModel event) {
     CollectionReference<EventModel> eventCollection = getEventCollection();
-   DocumentReference<EventModel> doc =  eventCollection.doc();
-   event.id = doc.id;
+    DocumentReference<EventModel> doc = eventCollection.doc();
+    event.id = doc.id;
+
     return doc.set(event);
   }
 
   static Future<List<EventModel>> getEvents() async{
+    String currentUserId = FirebaseAuth.instance.currentUser!.uid;
     CollectionReference<EventModel> eventsCollection = getEventCollection();
     QuerySnapshot<EventModel> querySnapshot = await eventsCollection.orderBy('timestamp').get();
     return querySnapshot.docs.map((docSnapshot) => docSnapshot.data()).toList();
   }
 
-  static Future<void> updateEvent (EventModel event){
+  static Future<void> updateEvent(EventModel event) {
+
     CollectionReference<EventModel> eventCollection = getEventCollection();
     return eventCollection.doc(event.id).set(event);
   }
 
-  static Future<void> deleteEvent (EventModel event){
+  static Future<void> deleteEvent(EventModel event) {
     CollectionReference<EventModel> eventCollection = getEventCollection();
     return eventCollection.doc(event.id).delete();
   }
@@ -52,28 +57,48 @@ class FirebaseService {
     required String name,
     required String email,
     required String password,
-  }) async{
+  }) async {
     UserCredential credential = await FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password);
-    UserModel user = UserModel(id: credential.user!.uid, name: name, email: email);
+    UserModel user = UserModel(
+        id: credential.user!.uid, name: name, email: email,favoriteEventsIds: []);
 
     CollectionReference<UserModel> userCollection = getUsersCollection();
     await userCollection.doc(user.id).set(user);
     return user;
   }
 
-  static Future<UserModel> login ({
+  static Future<UserModel> login({
     required String email,
     required String password
-}) async {
+  }) async {
     UserCredential credential = await FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password);
 
     CollectionReference<UserModel> usersCollection = getUsersCollection();
-    DocumentSnapshot<UserModel> docSnapshot = await usersCollection.doc(credential.user!.uid).get();
+    DocumentSnapshot<UserModel> docSnapshot = await usersCollection.doc(
+        credential.user!.uid).get();
     return docSnapshot.data()!;
   }
 
   static Future<void> logout() => FirebaseAuth.instance.signOut();
-}
 
+  static Future<void> addEventToFavorite(String eventId) async{
+    CollectionReference<UserModel> usersCollection = getUsersCollection();
+    DocumentReference<UserModel> userDoc = usersCollection.doc(
+      FirebaseAuth.instance.currentUser!.uid,
+    );
+    return userDoc.update({'favoriteEventsIds': FieldValue.arrayUnion([eventId])});
+  }
+
+  static Future<void> removeEventFromFavorite(String eventId) async{
+    CollectionReference<UserModel> usersCollection = getUsersCollection();
+    DocumentReference<UserModel> userDoc = usersCollection.doc(
+      FirebaseAuth.instance.currentUser!.uid,
+    );
+    return userDoc.update({'favoriteEventsIds': FieldValue.arrayRemove([eventId])});
+  }
+
+
+
+}

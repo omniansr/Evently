@@ -1,4 +1,5 @@
 import 'package:evently/app_theme.dart';
+import 'package:evently/auth/register_screen.dart';
 import 'package:evently/home_screen.dart';
 import 'package:evently/models/onboarding_model.dart' show OnboardingModel;
 import 'package:flutter/cupertino.dart';
@@ -50,7 +51,7 @@ import 'package:shared_preferences/shared_preferences.dart';
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onBoarding', true);
 
-    Navigator.pushReplacementNamed(context, HomeScreen.routename);
+    Navigator.pushReplacementNamed(context, RegisterScreen.routename);
   }
   
   @override
