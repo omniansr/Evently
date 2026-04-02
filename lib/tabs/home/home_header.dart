@@ -22,7 +22,7 @@ class _HomeHeaderState extends State<HomeHeader> {
     TextTheme textTheme = Theme.of(context).textTheme;
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0,top: 16),
+      padding: const EdgeInsets.only(left: 16.0,top: 16,right: 16),
       child: Column(
         crossAxisAlignment: .start,
         children: [

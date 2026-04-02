@@ -48,7 +48,7 @@ class EventItem  extends StatelessWidget{
            ),
          ),
          Container(
-           margin: EdgeInsets.only(top: 8,left: 8),
+           margin: EdgeInsets.only(top: 8,left: 8,right: 8),
            padding: EdgeInsets.all(8),
            decoration: BoxDecoration(
              color: isDark? AppTheme.darkBlack : AppTheme.offwhite,

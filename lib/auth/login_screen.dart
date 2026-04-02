@@ -2,6 +2,7 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/auth/register_screen.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/home_screen.dart';
+import 'package:evently/l10n/app_localizations.dart';
 import 'package:evently/models/user_model.dart';
 import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
@@ -42,16 +43,16 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               Center(child: Image.asset(isDark? 'assets/images/darkheader.png':'assets/images/header.png', height: 27,)),
               SizedBox(height: 48),
-              Text('Login to your account',style: textTheme.headlineMedium,
+              Text(AppLocalizations.of(context)!.loginToYourAccount,style: textTheme.headlineMedium,
                 textAlign: .right,),
               SizedBox(height: 28),
               DefaultTextFormField( type: DefaultTextFormFieldType.auth,
-                hintText: 'Enter your email',
+                hintText: AppLocalizations.of(context)!.enterYourEmail,
                 prifixIconImageName: 'email',
                 controller: email,
                 validator: (value){
                   if(value == null || value.length<2){
-                    return 'Invalid email';
+                    return AppLocalizations.of(context)!.invalidEmail;
                   }
                   return null;
                 },),
@@ -59,29 +60,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
               DefaultTextFormField(
                 type: DefaultTextFormFieldType.auth,
-                hintText: 'Enter your password',
+                hintText: AppLocalizations.of(context)!.enterYourPassword,
                 prifixIconImageName: 'password',
                 controller: password,
                 validator: (value){
                   if(value == null || value.length<2){
-                    return 'Invalid password';
+                    return AppLocalizations.of(context)!.invalidPassword;
                   }
                   return null;
                 },
                 isPassword: true,),
               SizedBox(height: 48),
-              DefaultElevatedButton(label: 'Login', onPressed: (){
+              DefaultElevatedButton(label: AppLocalizations.of(context)!.login, onPressed: (){
                 login();
               }),
               SizedBox(height: 32,),
               Row(
                 mainAxisAlignment: .center,
                 children: [
-                  Text('Don’t have an account ?',style: textTheme.titleSmall?.copyWith(color: isDark?
+                  Text(AppLocalizations.of(context)!.doNotHaveAccount,style: textTheme.titleSmall?.copyWith(color: isDark?
                   AppTheme.lightoffwhite : AppTheme.gray),),
                   TextButton(onPressed: (){
                     Navigator.of(context).pushReplacementNamed(RegisterScreen.routename);
-                  }, child: Text('Sign up'))
+                  }, child: Text(AppLocalizations.of(context)!.register))
                 ],
               ),
               SizedBox(height: 32,),
@@ -90,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(child: Divider(color: isDark ? AppTheme.lightblue : AppTheme.lightgrey,)),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text('Or',style:  textTheme.titleMedium!.copyWith(color: isDark? AppTheme.darkPrimary: AppTheme.primary
+                    child: Text(AppLocalizations.of(context)!.or,style:  textTheme.titleMedium!.copyWith(color: isDark? AppTheme.darkPrimary: AppTheme.primary
                         ,fontWeight: .w500)
                     ),
                   ),
@@ -110,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Image.asset('assets/images/google.png'),
                     SizedBox(width: 16,),
-                    Text('Login with Google',style: textTheme.headlineSmall,)
+                    Text(AppLocalizations.of(context)!.loginWithGoogle,style: textTheme.headlineSmall,)
                   ],
                 ),)
 

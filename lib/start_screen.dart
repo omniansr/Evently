@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class StartScreen extends StatefulWidget{
@@ -16,7 +17,9 @@ class StartScreen extends StatefulWidget{
 
 class _StartScreenState extends State<StartScreen> {
   String selectedLang ='en';
-  String selectedTheme ='sun';
+  String selectedTheme ='light';
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +58,8 @@ class _StartScreenState extends State<StartScreen> {
                           setState(() {
                             selectedLang = 'en';
                           });
+                          settingProvider.changeLanguage(selectedLang);
+
                         },
                             style:ElevatedButton.styleFrom(
                               backgroundColor:
@@ -77,6 +82,8 @@ class _StartScreenState extends State<StartScreen> {
                           setState(() {
                             selectedLang = 'ar';
                           });
+                          settingProvider.changeLanguage(selectedLang);
+
                         },
                           style:ElevatedButton.styleFrom(
                               backgroundColor:
@@ -101,16 +108,17 @@ class _StartScreenState extends State<StartScreen> {
                           Spacer(),
                           ElevatedButton(onPressed: (){
                             setState(() {
-                              selectedTheme = 'sun';
-                              settingProvider.changeTheme(ThemeMode.light);
+                              selectedTheme = 'light';
                             });
+                            settingProvider.changeTheme(ThemeMode.light);
+
                           },
                             style:ElevatedButton.styleFrom(
                                 backgroundColor:
-                                selectedTheme =='sun'? settingProvider.isDark? AppTheme.darkPrimary : AppTheme.primary
+                                selectedTheme =='light'? settingProvider.isDark? AppTheme.darkPrimary : AppTheme.primary
                                     :settingProvider.isDark ? AppTheme.darkblue : AppTheme.white,
                               shape: RoundedRectangleBorder(side:BorderSide(
-                                  color:  selectedTheme !='sun'?  settingProvider.isDark  ? AppTheme.lightblue : AppTheme.lightgrey
+                                  color:  selectedTheme !='light'?  settingProvider.isDark  ? AppTheme.lightblue : AppTheme.lightgrey
                                       : Colors.transparent)  ,borderRadius: BorderRadius.circular(8)),
 
                             ),
@@ -123,22 +131,22 @@ class _StartScreenState extends State<StartScreen> {
 
                           ElevatedButton(onPressed: (){
                             setState(() {
-                              selectedTheme = 'moon';
-                              settingProvider.changeTheme(ThemeMode.dark);
-
+                              selectedTheme = 'dark';
                             });
+                            settingProvider.changeTheme(ThemeMode.dark);
+
                           },
                               style:ElevatedButton.styleFrom(
                                   backgroundColor:
-                                  selectedTheme =='moon'? settingProvider.isDark? AppTheme.darkPrimary : AppTheme.primary
+                                  selectedTheme =='dark'? settingProvider.isDark? AppTheme.darkPrimary : AppTheme.primary
                                       :settingProvider.isDark ? AppTheme.darkblue : AppTheme.white,
                                   shape: RoundedRectangleBorder(side:BorderSide(
-                                      color:  selectedTheme !='moon'?  settingProvider.isDark  ? AppTheme.lightblue : AppTheme.lightgrey
+                                      color:  selectedTheme !='dark'?  settingProvider.isDark  ? AppTheme.lightblue : AppTheme.lightgrey
                                           : Colors.transparent)  ,borderRadius: BorderRadius.circular(8)),
                               ),
                               child: SvgPicture.asset('assets/icons/moon.svg',height: 24,width: 24,
                                 colorFilter: ColorFilter.mode(settingProvider.isDark ? AppTheme.white:
-                                    selectedTheme == 'moon'? AppTheme.white : AppTheme.primary , BlendMode.srcIn))
+                                    selectedTheme == 'dark'? AppTheme.white : AppTheme.primary , BlendMode.srcIn))
                           ),
           ],
                           ),
@@ -146,6 +154,7 @@ class _StartScreenState extends State<StartScreen> {
 
                       ElevatedButton(onPressed: (){
                         Navigator.pushNamed(context, OnboardingScreen.routename);
+
                       },style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                         backgroundColor: settingProvider.isDark ? AppTheme.darkPrimary:AppTheme.primary,
