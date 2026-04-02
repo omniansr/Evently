@@ -1,0 +1,16 @@
+{
+  "register": "إنشاء حساب",
+  "login": "تسجيل الدخول",
+  "doNotHaveAccount": "ليس لديك حساب؟",
+  "loginToYourAccount": "الدخول إلى حسابك",
+  "enterYourEmail": "أدخل بريدك الإلكتروني",
+  "invalidEmail": "البريد الإلكتروني خاطئ",
+  "enterYourPassword": "أدخل كلمة السر",
+  "invalidPassword": "كلمة لسر خاطئة",
+  "or": "أو",
+  "loginWithGoogle": "تسجيل الدخول بحساب جوجل"
+
+
+
+
+}
