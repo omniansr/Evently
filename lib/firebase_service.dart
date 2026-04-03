@@ -28,9 +28,11 @@ class FirebaseService {
       );
 
   static Future<void> createEvent(EventModel event) {
+    print('wselt lel update method');
     CollectionReference<EventModel> eventCollection = getEventCollection();
     DocumentReference<EventModel> doc = eventCollection.doc();
     event.id = doc.id;
+    print('wselt lel update method 2');
 
     return doc.set(event);
   }
@@ -97,6 +99,10 @@ class FirebaseService {
       FirebaseAuth.instance.currentUser!.uid,
     );
     return userDoc.update({'favoriteEventsIds': FieldValue.arrayRemove([eventId])});
+  }
+
+  static String getCurrentUserId(){
+    return FirebaseAuth.instance.currentUser!.uid;
   }
 
 

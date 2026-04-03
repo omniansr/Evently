@@ -4,6 +4,7 @@ import 'package:evently/firebase_service.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/home/tab_item.dart';
 import 'package:evently/widgets/app_bar_actions.dart';
 import 'package:evently/widgets/arrow_back.dart';
@@ -40,15 +41,19 @@ class _DetailsScreenState extends State<DetailsScreen> {
     TextTheme textTheme = Theme.of(context).textTheme;
     bool isDark = Theme.of(context).brightness == Brightness.dark;
     Size screenSize = MediaQuery.sizeOf(context);
+    UserProvider userProvider = Provider.of<UserProvider>(context);
  final event = ModalRoute.of(context)!.settings.arguments as EventModel;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(leading: ArrowBack() , title: Text('Event details'),
         actions: [
-        InkWell(child: AppBarActions(svgName: 'edit', isEdit: true),onTap: (){
+          if(event.userId == userProvider.currentUser!.id)
+        InkWell(child: AppBarActions(svgName: 'edit', isEdit: true),
+          onTap: (){
           Navigator.of(context).pushReplacementNamed(CreateEventScreen.routename,arguments: event);
         },),
-        Padding(
+          if(event.userId == userProvider.currentUser!.id)
+            Padding(
           padding: const EdgeInsets.only(right: 16.0,left: 8),
           child: InkWell(child: AppBarActions(svgName: 'delete', isEdit: false),
             onTap: (){
