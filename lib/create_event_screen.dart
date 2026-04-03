@@ -4,11 +4,13 @@ import 'package:evently/home_screen.dart';
 import 'package:evently/models/category_model.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/providers/event_provider.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:evently/tabs/home/tab_item.dart';
 import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/arrow_back.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:evently/widgets/default_text_form_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -34,6 +36,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   TimeOfDay? selectedTime;
   DateFormat dateFormat = DateFormat('d/M/yyyy');
   EventModel? event;
+
 
   void initState(){
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -185,8 +188,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     );
   }
 
-  void CreateEvent()
-  {
+  Future<void> CreateEvent()
+  async {
     if(formKey.currentState!.validate() && selectedDate != null && selectedTime != null) {
       DateTime dateTime = DateTime(
         selectedDate!.year,
@@ -199,7 +202,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           category: selectedCategory,
           title: title.text,
           description: description.text,
-          dateTime: dateTime );
+          dateTime: dateTime,
+          userId:  FirebaseService.getCurrentUserId());
       FirebaseService.createEvent(createEvent).then((_) async{
         await Provider.of<EventProvider>(context,listen: false).getEvents();
         Navigator.of(context).pop();
@@ -211,8 +215,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
     }
   }
 
-  void EditEvent()
-  {
+  Future<void> EditEvent()
+  async {
     if(formKey.currentState!.validate() && selectedDate != null && selectedTime != null) {
       DateTime dateTime = DateTime(
           selectedDate!.year,
@@ -226,7 +230,8 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           category: selectedCategory,
           title: title.text,
           description: description.text,
-          dateTime: dateTime );
+          dateTime: dateTime,
+          userId: FirebaseService.getCurrentUserId());
       FirebaseService.updateEvent(updateEvent).then((_) {
         Provider.of<EventProvider>(context, listen: false)
             .updateEventInProvider(updateEvent);

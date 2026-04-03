@@ -26,7 +26,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
-      ChangeNotifierProvider(create: (_) => EventProvider()),
+      ChangeNotifierProvider(create: (_) => EventProvider()..getEvents()),
       ChangeNotifierProvider(create: (_) => SettingProvider()),
 
   ]
