@@ -32,15 +32,17 @@ class _FavoriteTabState extends State<FavoriteTab> {
          padding: const EdgeInsets.all(16.0),
          child: DefaultTextFormField(type: DefaultTextFormFieldType.search,
            hintText: 'Search for event',
-           onChanged: (query){},
+           onChanged: (query){
+            eventProvider.searchFavoriteEvents(query);
+           },
            suffixIconImageName: 'search',),
        ),
       Expanded(
          child: ListView.separated(
              padding: EdgeInsets.symmetric(horizontal: 16),
-             itemBuilder: (_,index) => EventItem(eventProvider.favoriteEvents[index]),
+             itemBuilder: (_,index) => EventItem(eventProvider.displayedFavoriteEvents[index]),
              separatorBuilder:(_,_) => SizedBox(height: 16,),
-            itemCount: eventProvider.favoriteEvents.length),
+            itemCount: eventProvider.displayedFavoriteEvents.length),
        )
 
      ],

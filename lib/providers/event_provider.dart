@@ -41,7 +41,8 @@ import 'package:flutter/material.dart';
 class EventProvider with ChangeNotifier {
   List<EventModel> allEvents = [];
   List<EventModel> displayedEvents = [];
-  List<EventModel> favoriteEvents = [];
+  List<EventModel> allFavoriteEvents = [];
+  List<EventModel> displayedFavoriteEvents = [];
 
 
   Future<void> getEvents() async {
@@ -87,7 +88,16 @@ class EventProvider with ChangeNotifier {
   }
 
   void filterFavoriteEvents(List<String> favoriteEventsIds){
-    favoriteEvents = allEvents.where((event) => favoriteEventsIds.contains(event.id)).toList();
+    allFavoriteEvents = allEvents.where((event) => favoriteEventsIds.contains(event.id)).toList();
+    displayedFavoriteEvents = allFavoriteEvents;
+    notifyListeners();
+  }
+
+  void searchFavoriteEvents( String query){
+    displayedFavoriteEvents = allFavoriteEvents
+        .where((event) =>
+        event.title.toLowerCase().contains(query.toLowerCase()))
+        .toList();
     notifyListeners();
   }
 }
