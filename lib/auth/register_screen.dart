@@ -2,6 +2,8 @@ import 'package:evently/app_theme.dart';
 import 'package:evently/auth/login_screen.dart';
 import 'package:evently/firebase_service.dart';
 import 'package:evently/home_screen.dart';
+import 'package:evently/models/user_model.dart';
+import 'package:evently/providers/event_provider.dart';
 import 'package:evently/providers/user_provider.dart';
 import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
@@ -109,7 +111,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ],
               ),
               SizedBox(height: 24,),
-              ElevatedButton(onPressed: (){},
+              ElevatedButton(onPressed: (){
+                loginWithGoogle();
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: isDark ? AppTheme.darkBlack : AppTheme.white,
                 elevation: 0,
@@ -152,4 +156,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       });
     }
   }
+
+ Future<void> loginWithGoogle() async {
+   try {
+     UserModel? user = await FirebaseService.loginWithGoogle();
+     if (user == null) {
+       return;
+     }
+     Provider.of<UserProvider>(context, listen: false).updateCurrentUser(
+         user);
+     Provider.of<EventProvider>(context, listen: false).clearEvents();
+     await Provider.of<EventProvider>(context, listen: false).getEvents();
+     Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+   }catch(error){
+     String? errorMessage;
+     if(error is FirebaseAuthException)
+     {
+       errorMessage = error.message;
+     }
+     UiUtils.showErrorMessage(errorMessage);
+   }
+ }
+
 }

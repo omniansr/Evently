@@ -10,8 +10,8 @@ import 'package:evently/ui_utils.dart';
 import 'package:evently/widgets/default_elevated_button.dart';
 import 'package:evently/widgets/default_text_form_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -99,7 +99,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               SizedBox(height: 24,),
-              ElevatedButton(onPressed: (){},
+              ElevatedButton(onPressed: (){
+                loginWithGoogle();
+              },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: isDark ? AppTheme.darkBlack : AppTheme.white,
                     elevation: 0,
@@ -141,6 +143,27 @@ class _LoginScreenState extends State<LoginScreen> {
         }
         UiUtils.showErrorMessage(errorMessage);
       }
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      UserModel? user = await FirebaseService.loginWithGoogle();
+      if (user == null) {
+        return;
+      }
+      Provider.of<UserProvider>(context, listen: false).updateCurrentUser(
+          user);
+      Provider.of<EventProvider>(context, listen: false).clearEvents();
+      await Provider.of<EventProvider>(context, listen: false).getEvents();
+      Navigator.of(context).pushReplacementNamed(HomeScreen.routename);
+    }catch(error){
+      String? errorMessage;
+      if(error is FirebaseAuthException)
+      {
+        errorMessage = error.message;
+      }
+      UiUtils.showErrorMessage(errorMessage);
     }
   }
 }
