@@ -1,11 +1,22 @@
 flutter_native_splash:
   color: "#F4F7FF"
+  color_dark: "#000F30"
   image: assets/images/light_splashscreen.png
-  branding: assets/images/light_branding.png
+  image_dark: assets/images/dark_splashscreen.png
+  branding: assets/images/3.0x/light_branding@3x.png
+  branding_dark: assets/images/3.0x/dark_branding@3x.png
   branding_bottom_padding: 24
+
+
 
   android_12:
     color: "#F4F7FF"
+    color_dark: "#000F30"
     image: assets/images/light_splashscreen12.png
-    branding: assets/images/light_branding.png
+    image_dark: assets/images/dark_splashscreen12.png
+    branding: assets/images/3.0x/light_branding@3x.png
+    branding_dark: assets/images/3.0x/dark_branding@3x.png
     branding_bottom_padding: 24
+
+
+

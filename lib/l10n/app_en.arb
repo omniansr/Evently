@@ -1,0 +1,14 @@
+{
+  "register": "Register",
+  "login": "Login",
+  "doNotHaveAccount": "Don’t have an account?",
+  "loginToYourAccount": "Login to your account",
+  "enterYourEmail": "Enter your email",
+  "invalidEmail": "Invalid email",
+  "enterYourPassword": "Enter your password",
+  "invalidPassword": "Invalid password",
+  "or": "Or",
+  "loginWithGoogle": "Login with Google"
+
+
+}
