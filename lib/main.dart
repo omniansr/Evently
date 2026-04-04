@@ -16,6 +16,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
@@ -23,7 +25,8 @@ Future<void> main() async {
   SettingProvider settingProvider = SettingProvider();
   await settingProvider.loadSettings();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+  );
   runApp(MultiProvider(providers: [
       ChangeNotifierProvider(create: (_) => UserProvider()),
       ChangeNotifierProvider(create: (_) => EventProvider()..getEvents()),

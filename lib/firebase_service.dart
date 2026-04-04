@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently/models/event_model.dart';
 import 'package:evently/models/user_model.dart';
+import 'package:evently/providers/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseService {
   static CollectionReference<EventModel> getEventCollection() =>
@@ -101,6 +104,28 @@ class FirebaseService {
 
   static String getCurrentUserId(){
     return FirebaseAuth.instance.currentUser!.uid;
+  }
+
+  static Future<UserModel?> loginWithGoogle() async{
+      final GoogleSignIn siginIn =  GoogleSignIn.instance;
+      siginIn.initialize(serverClientId: '616238932354-vsjcs4bp7h24kp7d2kc3qed9qin3gpik.apps.googleusercontent.com');
+      final GoogleSignInAccount? googleUser = await GoogleSignIn.instance.authenticate();
+      if(googleUser != null) {
+        final credential = GoogleAuthProvider.credential(
+            idToken: googleUser.authentication.idToken);
+        UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithCredential(credential);
+
+        UserModel user = UserModel(id: userCredential.user!.uid,
+            name: userCredential.user!.displayName ?? "",
+            email: userCredential.user!.email ?? "",
+            favoriteEventsIds: []);
+
+        CollectionReference<UserModel> userCollection = getUsersCollection();
+        await userCollection.doc(user.id).set(user);
+        return user;
+      }
+      return null;
   }
 
 
